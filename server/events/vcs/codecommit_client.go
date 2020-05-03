@@ -146,10 +146,49 @@ func (c *CodeCommitClient) PullIsMergeable(repo models.Repo, pull models.PullReq
 }
 
 func (c *CodeCommitClient) UpdateStatus(repo models.Repo, pull models.PullRequest, state models.CommitStatus, src string, description string, url string) error {
-	return errors.New("Not Implemented")
 	// API possibilities
 	// https://github.blog/2012-09-04-commit-status-api/
 	// UpdatePullRequestApprovalState
+
+	pullRequestId := strconv.Itoa(pull.Num)
+	pullRequest, err := c.Client.GetPullRequest(&codecommit.GetPullRequestInput{
+		PullRequestId: &pullRequestId,
+	})
+	if err != nil {
+		return err
+	}
+
+	revisionId := *pullRequest.PullRequest.RevisionId
+
+	ccState := "error"
+	switch state {
+	case models.PendingCommitStatus:
+	case models.FailedCommitStatus:
+		ccState = "REVOKED"
+	case models.SuccessCommitStatus:
+		ccState = "APPROVED"
+	}
+	_, err = c.Client.UpdatePullRequestApprovalState(&codecommit.UpdatePullRequestApprovalStateInput{
+		ApprovalState: &ccState,
+		PullRequestId: &pullRequestId,
+		RevisionId:    &revisionId,
+	})
+	if err != nil {
+		return err
+	}
+
+	baseCommitId := *pullRequest.PullRequest.PullRequestTargets[0].MergeBase
+	prBranchTipId := *pullRequest.PullRequest.PullRequestTargets[0].SourceCommit
+	comment := fmt.Sprintf("Atlantis set pull status approval to : %s", ccState)
+
+	_, err = c.Client.PostCommentForPullRequest(&codecommit.PostCommentForPullRequestInput{
+		RepositoryName: &repo.Name,
+		PullRequestId:  &pullRequestId,
+		BeforeCommitId: &baseCommitId,
+		AfterCommitId:  &prBranchTipId,
+		Content:        &comment,
+	})
+	return err
 }
 
 func (c *CodeCommitClient) MergePull(pull models.PullRequest) error {

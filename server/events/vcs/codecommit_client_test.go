@@ -112,6 +112,48 @@ func TestCodeCommitClient_HideOldComments(t *testing.T) {
 	Equals(t, 3, mock.commentsDeleted)
 }
 
+type updateStatusMock struct {
+	codecommitiface.CodeCommitAPI
+}
+
+func (m *updateStatusMock) GetPullRequest(input *codecommit.GetPullRequestInput) (*codecommit.GetPullRequestOutput, error) {
+	revisionId := "a-revision-of-splendour"
+	mergeBase := "refs/heads/master"
+	sourceCommit := "refs/heads/pr-01"
+	return &codecommit.GetPullRequestOutput{
+		PullRequest: &codecommit.PullRequest{
+			RevisionId: &revisionId,
+			PullRequestTargets: []*codecommit.PullRequestTarget{
+				{
+					MergeBase:    &mergeBase,
+					SourceCommit: &sourceCommit,
+				},
+			},
+		},
+	}, nil
+}
+
+func (m *updateStatusMock) UpdatePullRequestApprovalState(input *codecommit.UpdatePullRequestApprovalStateInput) (*codecommit.UpdatePullRequestApprovalStateOutput, error) {
+	return &codecommit.UpdatePullRequestApprovalStateOutput{}, nil
+}
+
+func (m *updateStatusMock) PostCommentForPullRequest(input *codecommit.PostCommentForPullRequestInput) (*codecommit.PostCommentForPullRequestOutput, error) {
+	return &codecommit.PostCommentForPullRequestOutput{}, nil
+}
+
+func TestCodeCommitClient_UpdateStatus(t *testing.T) {
+	client := vcs.CodeCommitClient{Client: &updateStatusMock{}}
+	err := client.UpdateStatus(
+		models.Repo{},
+		models.PullRequest{},
+		models.SuccessCommitStatus,
+		"source is ignored",
+		"description is ignored",
+		"url is ignored",
+	)
+	Ok(t, err)
+}
+
 type pullIsApprovedMock struct {
 	codecommitiface.CodeCommitAPI
 	RepoName             string
