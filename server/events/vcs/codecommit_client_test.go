@@ -14,6 +14,84 @@ import (
 	. "github.com/runatlantis/atlantis/testing"
 )
 
+type modifiedFilesMock struct {
+	codecommitiface.CodeCommitAPI
+}
+
+func (m *modifiedFilesMock) CreateUnreferencedMergeCommit(*codecommit.CreateUnreferencedMergeCommitInput) (*codecommit.CreateUnreferencedMergeCommitOutput, error) {
+	commitId := "a-merged-commit"
+	return &codecommit.CreateUnreferencedMergeCommitOutput{
+		CommitId: &commitId,
+	}, nil
+}
+
+func (m *modifiedFilesMock) GetDifferences(input *codecommit.GetDifferencesInput) (*codecommit.GetDifferencesOutput, error) {
+
+	blobbyId := "mr-blobby"
+	blobbyPath1 := "blobby-blobby-blob.txt"
+	blobbyPath2 := "blibby-blebby-bloob.txt"
+	nextToken := "next please"
+
+	diffResponseOne := &codecommit.GetDifferencesOutput{
+		Differences: []*codecommit.Difference{
+			{
+				BeforeBlob: &codecommit.BlobMetadata{
+					BlobId: &blobbyId,
+					Path:   &blobbyPath1,
+				},
+				AfterBlob: &codecommit.BlobMetadata{
+					BlobId: &blobbyId,
+					Path:   &blobbyPath2,
+				},
+			},
+		},
+		NextToken: &nextToken,
+	}
+
+	theBlobId := "the-blob"
+	sonOfBlobId := "the-blob-2"
+	blobPath := "big-scary-blob.txt"
+
+	diffResponseTwo := &codecommit.GetDifferencesOutput{
+		Differences: []*codecommit.Difference{
+			{
+				BeforeBlob: &codecommit.BlobMetadata{
+					BlobId: &theBlobId,
+					Path:   &blobPath,
+				},
+				AfterBlob: &codecommit.BlobMetadata{
+					BlobId: &sonOfBlobId,
+					Path:   &blobPath,
+				},
+			},
+		},
+	}
+
+	if input.NextToken == nil {
+		return diffResponseOne, nil
+	}
+
+	return diffResponseTwo, nil
+}
+
+func TestCodeCommitClient_GetModifiedFiles(t *testing.T) {
+	mock := modifiedFilesMock{}
+	client := vcs.CodeCommitClient{
+		Client: &mock,
+	}
+	files, err := client.GetModifiedFiles(
+		models.Repo{
+			Name: "atlantis-test",
+		},
+		models.PullRequest{
+			BaseBranch: "refs/heads/master",
+			HeadBranch: "refs/heads/pr-blobby",
+		},
+	)
+	Ok(t, err)
+	Equals(t, 3, len(files))
+}
+
 type postCommentMock struct {
 	codecommitiface.CodeCommitAPI
 	PageCount int

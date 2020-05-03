@@ -19,7 +19,42 @@ type CodeCommitClient struct {
 }
 
 func (c *CodeCommitClient) GetModifiedFiles(repo models.Repo, pull models.PullRequest) ([]string, error) {
-	return []string{}, errors.New("Not Implemented")
+	mergeOption := codecommit.MergeOptionTypeEnumThreeWayMerge
+	mergeOutput, err := c.Client.CreateUnreferencedMergeCommit(&codecommit.CreateUnreferencedMergeCommitInput{
+		RepositoryName:             &repo.Name,
+		DestinationCommitSpecifier: &pull.BaseBranch,
+		SourceCommitSpecifier:      &pull.HeadBranch,
+		MergeOption:                &mergeOption,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	mergeCommit := mergeOutput.CommitId
+	files := []string{}
+
+	var nextToken *string
+	for {
+		diffOutput, err := c.Client.GetDifferences(&codecommit.GetDifferencesInput{
+			AfterCommitSpecifier: mergeCommit,
+			NextToken:            nextToken,
+		})
+		if err != nil {
+			return nil, err
+		}
+		for _, diff := range diffOutput.Differences {
+			files = append(files, *diff.AfterBlob.Path)
+			if *diff.AfterBlob.Path != *diff.BeforeBlob.Path {
+				files = append(files, *diff.BeforeBlob.Path)
+			}
+		}
+		nextToken = diffOutput.NextToken
+		if nextToken == nil {
+			break
+		}
+	}
+
+	return files, nil
 }
 
 const commentSizeLimit int = 1000
@@ -95,7 +130,7 @@ func (c *CodeCommitClient) HidePrevPlanComments(repo models.Repo, pullNum int) e
 			CommentId: comment.CommentId,
 		})
 		if err != nil {
-			return errors.Wrapf(err, "minimize conmment %s", *comment.CommentId)
+			return errors.Wrapf(err, "minimize comment %s", *comment.CommentId)
 		}
 	}
 
