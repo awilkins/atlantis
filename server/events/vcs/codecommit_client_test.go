@@ -1,6 +1,7 @@
 package vcs_test
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -98,8 +99,7 @@ func (m *hideCommentsMock) DeleteCommentContent(*codecommit.DeleteCommentContent
 
 func TestCodeCommitClient_HideOldComments(t *testing.T) {
 	mock := hideCommentsMock{
-		pagesRemaining:  2,
-		commentsDeleted: 0,
+		pagesRemaining: 2,
 	}
 	client := &vcs.CodeCommitClient{
 		Client:  &mock,
@@ -169,6 +169,60 @@ func TestCodeCommitClient_PullIsApproved(t *testing.T) {
 	Ok(t, err)
 	Equals(t, false, approved)
 	Equals(t, true, mock.Used())
+}
+
+type pullMergeableMock struct {
+	codecommitiface.CodeCommitAPI
+}
+
+func (m *pullMergeableMock) GetMergeConflicts(input *codecommit.GetMergeConflictsInput) (*codecommit.GetMergeConflictsOutput, error) {
+	isTrue := true
+	isFalse := false
+	switch *input.SourceCommitSpecifier {
+	case "refs/heads/pr-01":
+		return &codecommit.GetMergeConflictsOutput{
+			Mergeable: &isTrue,
+		}, nil
+	case "refs/heads/pr-02":
+		return &codecommit.GetMergeConflictsOutput{
+			Mergeable: &isFalse,
+		}, nil
+	default:
+		return nil, errors.New("Unknown branch")
+	}
+}
+
+func TestCodeCommit_PullIsMergeable(t *testing.T) {
+	mock := &pullMergeableMock{}
+	client := vcs.CodeCommitClient{
+		Client: mock,
+	}
+	// PR1 can merge
+	mergeable, err := client.PullIsMergeable(
+		models.Repo{},
+		models.PullRequest{
+			BaseRepo: models.Repo{
+				Name: "atlantis-test",
+			},
+			BaseBranch: "refs/heads/master",
+			HeadBranch: "refs/heads/pr-01",
+		},
+	)
+	Ok(t, err)
+	Equals(t, true, mergeable)
+	// PR2 can't
+	mergeable, err = client.PullIsMergeable(
+		models.Repo{},
+		models.PullRequest{
+			BaseRepo: models.Repo{
+				Name: "atlantis-test",
+			},
+			BaseBranch: "refs/heads/master",
+			HeadBranch: "refs/heads/pr-02",
+		},
+	)
+	Ok(t, err)
+	Equals(t, false, mergeable)
 }
 
 func TestCodeCommitClient_MarkdownPullLink(t *testing.T) {

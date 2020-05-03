@@ -61,8 +61,6 @@ func (c *CodeCommitClient) CreateComment(repo models.Repo, pullNum int, comment 
 }
 
 func (c *CodeCommitClient) HidePrevPlanComments(repo models.Repo, pullNum int) error {
-	// API : Not sure CC has an equivalent to minimizeComment()
-	// but you can do DeleteCommentContent and UpdateComment
 	var allComments []*codecommit.Comment
 	pullRequestId := strconv.Itoa(pullNum)
 	var nextToken *string = nil
@@ -126,8 +124,25 @@ func (c *CodeCommitClient) PullIsApproved(repo models.Repo, pull models.PullRequ
 }
 
 func (c *CodeCommitClient) PullIsMergeable(repo models.Repo, pull models.PullRequest) (bool, error) {
-	return false, errors.New("Not Implemented")
 	// API : GetMergeConflicts
+
+	repoName := pull.BaseRepo.Name
+	destinationSpec := pull.BaseBranch
+	sourceSpec := pull.HeadBranch
+	mergeOption := codecommit.MergeOptionTypeEnumThreeWayMerge
+	conflictDetail := codecommit.ConflictDetailLevelTypeEnumLineLevel
+
+	response, err := c.Client.GetMergeConflicts(&codecommit.GetMergeConflictsInput{
+		RepositoryName:             &repoName,
+		DestinationCommitSpecifier: &destinationSpec,
+		SourceCommitSpecifier:      &sourceSpec,
+		MergeOption:                &mergeOption,
+		ConflictDetailLevel:        &conflictDetail,
+	})
+	if err != nil {
+		return false, err
+	}
+	return *response.Mergeable, nil
 }
 
 func (c *CodeCommitClient) UpdateStatus(repo models.Repo, pull models.PullRequest, state models.CommitStatus, src string, description string, url string) error {
