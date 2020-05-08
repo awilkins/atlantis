@@ -312,7 +312,7 @@ func (m *pullMergeableMock) GetMergeConflicts(input *codecommit.GetMergeConflict
 	}
 }
 
-func TestCodeCommit_PullIsMergeable(t *testing.T) {
+func TestCodeCommitClient_PullIsMergeable(t *testing.T) {
 	mock := &pullMergeableMock{}
 	client := vcs.CodeCommitClient{
 		Client: mock,
@@ -344,6 +344,25 @@ func TestCodeCommit_PullIsMergeable(t *testing.T) {
 	Ok(t, err)
 	Equals(t, false, mergeable)
 }
+
+type mergeMock struct {
+	codecommitiface.CodeCommitAPI
+}
+
+// TODO : test merge pull handles error
+// func TestCodeCommitClient_MergePullHandlesError(t *testing.T) {
+
+// 	cases := []struct {
+
+// 	}{
+// 		expErr: codecommit.ConcurrentReferenceUpdateException{}
+// 	}
+// 	// No Error
+// 	// ConcurrentReferenceUpdateException
+// 	// ManualMergeRequiredException
+// }
+
+// test merge pull chooses correct method (not a choice)
 
 func TestCodeCommitClient_MarkdownPullLink(t *testing.T) {
 	client, err := vcs.NewCodeCommitClient()

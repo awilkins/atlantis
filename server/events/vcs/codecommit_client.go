@@ -227,8 +227,22 @@ func (c *CodeCommitClient) UpdateStatus(repo models.Repo, pull models.PullReques
 }
 
 func (c *CodeCommitClient) MergePull(pull models.PullRequest) error {
-	return errors.New("Not Implemented")
 	// API : MergePullRequestBy[ThreeWay|FastForward|Squash]
+	// Unlike the GitHub API
+
+	conflictDetail := codecommit.ConflictDetailLevelTypeEnumLineLevel
+	pullRequestId := strconv.Itoa(pull.Num)
+	repoName := pull.BaseRepo.Name
+	commitMessage := common.AutomergeCommitMsg
+
+	_, err := c.Client.MergePullRequestByThreeWay(&codecommit.MergePullRequestByThreeWayInput{
+		RepositoryName:      &repoName,
+		PullRequestId:       &pullRequestId,
+		ConflictDetailLevel: &conflictDetail,
+		CommitMessage:       &commitMessage,
+	})
+
+	return err
 }
 
 func (c *CodeCommitClient) MarkdownPullLink(pull models.PullRequest) (string, error) {
@@ -237,10 +251,6 @@ func (c *CodeCommitClient) MarkdownPullLink(pull models.PullRequest) (string, er
 	// For repo in the same acct/region the path works
 	// e.g. /codesuite/codecommit/repositories/atlantis-test/pull-requests/2
 	return fmt.Sprintf("/codesuite/codecommit/repositories/%s/pull-requests/%d", pull.BaseRepo.Name, pull.Num), nil
-}
-
-type mockCodeCommit struct {
-	codecommitiface.CodeCommitAPI
 }
 
 func NewCodeCommitClient() (*CodeCommitClient, error) {
