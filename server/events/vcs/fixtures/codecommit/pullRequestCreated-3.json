@@ -1,0 +1,55 @@
+{
+  "account": "386676700885",
+  "additionalAttributes": {
+    "changedFiles": [
+      {
+        "changeType": "D",
+        "filePath": ".awsenv"
+      },
+      {
+        "changeType": "M",
+        "filePath": "another.tf"
+      },
+      {
+        "changeType": "A",
+        "filePath": "create-a-pr.tf"
+      },
+      {
+        "changeType": "M",
+        "filePath": "test.tf"
+      }
+    ],
+    "numberOfFilesAdded": "1",
+    "numberOfFilesDeleted": "1",
+    "numberOfFilesModified": "2"
+  },
+  "detail": {
+    "author": "arn:aws:iam::386676700885:user/adrian.wilkins",
+    "callerUserArn": "arn:aws:iam::386676700885:user/adrian.wilkins",
+    "creationDate": "Sat May 09 12:34:31 UTC 2020",
+    "description": "I'm guessing the extra bits that SNS provides might be useful for e.g. verification though",
+    "destinationCommit": "cf69a356ee7fb33c7251800b2a5cea3173a9da33",
+    "destinationReference": "refs/heads/master",
+    "event": "pullRequestCreated",
+    "isMerged": "False",
+    "lastModifiedDate": "Sat May 09 12:34:31 UTC 2020",
+    "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: atlantis-test. User: arn:aws:iam::386676700885:user/adrian.wilkins. Event: Created. Pull request name: 5. Additional information: A pull request was created with the following ID: 5. The title of the pull request is: Another PR, but this time I'm using the raw message delivery. For more information, go to the AWS CodeCommit console https://eu-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/atlantis-test/pull-requests/5?region=eu-west-2.",
+    "pullRequestId": "5",
+    "pullRequestStatus": "Open",
+    "repositoryNames": [
+      "atlantis-test"
+    ],
+    "revisionId": "2e8e293c57422fd9f57a663a9fc9181a01127068aa4cec764b24c42ad91ceba2",
+    "sourceCommit": "3594b2b47c42d6cd921ae22436de060dd9d6da7d",
+    "sourceReference": "refs/heads/pr-02",
+    "title": "Another PR, but this time I'm using the raw message delivery"
+  },
+  "detailType": "CodeCommit Pull Request State Change",
+  "notificationRuleArn": "arn:aws:codestar-notifications:eu-west-2:386676700885:notificationrule/3211b21d68bc434e54a9fa1f8c2837e1a55ce782",
+  "region": "eu-west-2",
+  "resources": [
+    "arn:aws:codecommit:eu-west-2:386676700885:atlantis-test"
+  ],
+  "source": "aws.codecommit",
+  "time": "2020-05-09T12:34:42Z"
+}

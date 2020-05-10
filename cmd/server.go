@@ -48,6 +48,7 @@ const (
 	BitbucketTokenFlag         = "bitbucket-token"
 	BitbucketUserFlag          = "bitbucket-user"
 	BitbucketWebhookSecretFlag = "bitbucket-webhook-secret"
+	CodeCommitUserFlag         = "codecommit-user"
 	ConfigFlag                 = "config"
 	CheckoutStrategyFlag       = "checkout-strategy"
 	DataDirFlag                = "data-dir"
@@ -137,6 +138,7 @@ var stringFlags = map[string]stringFlag{
 			"This means that an attacker could spoof calls to Atlantis and cause it to perform malicious actions. " +
 			"Should be specified via the ATLANTIS_BITBUCKET_WEBHOOK_SECRET environment variable.",
 	},
+	// ----------
 	CheckoutStrategyFlag: {
 		description: "How to check out pull requests. Accepts either 'branch' (default) or 'merge'." +
 			" If set to branch, Atlantis will check out the source branch of the pull request." +
@@ -146,6 +148,12 @@ var stringFlags = map[string]stringFlag{
 			" after the pull request is merged.",
 		defaultValue: "branch",
 	},
+	// CodeCommit
+	CodeCommitUserFlag: {
+		description: "CodeCommit user name. Since the user you're operating as is" +
+			" determined by your IAM credentials/role, this may just be a signal to turn on CodeCommit right now",
+	},
+	// ---------
 	ConfigFlag: {
 		description: "Path to yaml config file where flag values can also be set.",
 	},
@@ -153,6 +161,7 @@ var stringFlags = map[string]stringFlag{
 		description:  "Path to directory to store Atlantis data.",
 		defaultValue: DefaultDataDir,
 	},
+	// GitHub
 	GHHostnameFlag: {
 		description:  "Hostname of your Github Enterprise installation. If using github.com, no need to set.",
 		defaultValue: DefaultGHHostname,
@@ -519,19 +528,41 @@ func (s *ServerCmd) validate(userConfig server.UserConfig) error {
 
 	// The following combinations are valid.
 	// 1. github user and token set
+	githubBad := (userConfig.GithubUser == "") != (userConfig.GithubToken == "")
 	// 2. gitlab user and token set
+	gitlabBad := (userConfig.GitlabUser == "") != (userConfig.GitlabToken == "")
 	// 3. bitbucket user and token set
+	bitbucketBad := (userConfig.BitbucketUser == "") != (userConfig.BitbucketToken == "")
 	// 4. azuredevops user and token set
+	azuredevopsBad := (userConfig.AzureDevopsUser == "") != (userConfig.AzureDevopsToken == "")
+	// 4a.codecommit user
+	codecommitBad := userConfig.CodeCommitUser == ""
 	// 5. any combination of the above
-	vcsErr := fmt.Errorf("--%s/--%s or --%s/--%s or --%s/--%s or --%s/--%s must be set", GHUserFlag, GHTokenFlag, GitlabUserFlag, GitlabTokenFlag, BitbucketUserFlag, BitbucketTokenFlag, ADUserFlag, ADTokenFlag)
-	if ((userConfig.GithubUser == "") != (userConfig.GithubToken == "")) || ((userConfig.GitlabUser == "") != (userConfig.GitlabToken == "")) || ((userConfig.BitbucketUser == "") != (userConfig.BitbucketToken == "")) || ((userConfig.AzureDevopsUser == "") != (userConfig.AzureDevopsToken == "")) {
+	vcsErr := fmt.Errorf(
+		"--%s/--%s or --%s/--%s or --%s/--%s or --%s/--%s or --%s must be set",
+		GHUserFlag,
+		GHTokenFlag,
+		GitlabUserFlag,
+		GitlabTokenFlag,
+		BitbucketUserFlag,
+		BitbucketTokenFlag,
+		ADUserFlag,
+		ADTokenFlag,
+		CodeCommitUserFlag,
+	)
+	if githubBad || gitlabBad || bitbucketBad || azuredevopsBad || codecommitBad {
 		return vcsErr
 	}
 	// At this point, we know that there can't be a single user/token without
 	// its partner, but we haven't checked if any user/token is set at all.
-	if userConfig.GithubUser == "" && userConfig.GitlabUser == "" && userConfig.BitbucketUser == "" && userConfig.AzureDevopsUser == "" {
+	if userConfig.GithubUser == "" && userConfig.GitlabUser == "" && userConfig.BitbucketUser == "" && userConfig.AzureDevopsUser == "" && userConfig.CodeCommitUser == "" {
 		return vcsErr
 	}
+
+	// TODO : make a VCS provider do these things
+	// 1: Contribute it's own flags to the config object
+	// 2: Check it's own flags to see whether it can function
+	// This reduces it to "for provider in ..."
 
 	if userConfig.RepoWhitelist == "" {
 		return fmt.Errorf("--%s must be set for security purposes", RepoWhitelistFlag)

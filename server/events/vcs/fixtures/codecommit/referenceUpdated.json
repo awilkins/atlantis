@@ -1,0 +1,23 @@
+{
+  "account": "386676700885",
+  "additionalAttributes": {},
+  "detail": {
+    "callerUserArn": "arn:aws:iam::386676700885:user/adrian.wilkins",
+    "commitId": "3594b2b47c42d6cd921ae22436de060dd9d6da7d",
+    "event": "referenceUpdated",
+    "oldCommitId": "083080f1438ea10c7944d2864ea2838983ad2f04",
+    "referenceFullName": "refs/heads/pr-02",
+    "referenceName": "pr-02",
+    "referenceType": "branch",
+    "repositoryId": "ba4fd543-bf21-429b-a945-a5ddf6cfbe89",
+    "repositoryName": "atlantis-test"
+  },
+  "detailType": "CodeCommit Repository State Change",
+  "notificationRuleArn": "arn:aws:codestar-notifications:eu-west-2:386676700885:notificationrule/3211b21d68bc434e54a9fa1f8c2837e1a55ce782",
+  "region": "eu-west-2",
+  "resources": [
+    "arn:aws:codecommit:eu-west-2:386676700885:atlantis-test"
+  ],
+  "source": "aws.codecommit",
+  "time": "2020-05-09T11:33:20Z"
+}

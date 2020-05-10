@@ -13,6 +13,21 @@ import (
 	"github.com/runatlantis/atlantis/server/events/vcs/common"
 )
 
+const (
+	CodeCommitUserFlag = "codecommit-user"
+)
+
+// var stringFlags = map[string]cmd.StringFlag{
+// 	CodeCommitUserFlag: {
+// 		description: "CodeCommit user name. Since the user you're operating as is" +
+// 			" determined by your IAM credentials/role, this may just be a signal to turn on CodeCommit right now",
+// 	},
+// }
+
+// var intFlags = map[string]cmd.IntFlag{}
+
+// var boolFlags = map[string]cmd.BoolFlag{}
+
 type CodeCommitClient struct {
 	Client  codecommitiface.CodeCommitAPI
 	UserArn string
@@ -256,3 +271,23 @@ func (c *CodeCommitClient) MarkdownPullLink(pull models.PullRequest) (string, er
 func NewCodeCommitClient() (*CodeCommitClient, error) {
 	return nil, nil
 }
+
+// func (c *CodeCommitClient) ContributeConfigFlags(
+// 	pstringFlags map[string]cmd.StringFlag,
+// 	pintFlags map[string]cmd.IntFlag,
+// 	pboolFlags map[string]cmd.BoolFlag,
+// ) {
+
+// 	for name, value := range stringFlags {
+// 		pstringFlags[name] = value
+// 	}
+
+// 	for name, value := range intFlags {
+// 		pintFlags[name] = value
+// 	}
+
+// 	for name, value := range boolFlags {
+// 		pboolFlags[name] = value
+// 	}
+
+// }

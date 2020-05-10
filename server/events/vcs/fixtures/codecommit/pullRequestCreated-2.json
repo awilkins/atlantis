@@ -1,0 +1,55 @@
+{
+  "account": "386676700885",
+  "additionalAttributes": {
+    "changedFiles": [
+      {
+        "changeType": "D",
+        "filePath": ".awsenv"
+      },
+      {
+        "changeType": "M",
+        "filePath": "another.tf"
+      },
+      {
+        "changeType": "A",
+        "filePath": "create-a-pr.tf"
+      },
+      {
+        "changeType": "M",
+        "filePath": "test.tf"
+      }
+    ],
+    "numberOfFilesAdded": "1",
+    "numberOfFilesDeleted": "1",
+    "numberOfFilesModified": "2"
+  },
+  "detail": {
+    "author": "arn:aws:iam::386676700885:user/adrian.wilkins",
+    "callerUserArn": "arn:aws:iam::386676700885:user/adrian.wilkins",
+    "creationDate": "Sat May 09 12:32:20 UTC 2020",
+    "description": "Flarp",
+    "destinationCommit": "cf69a356ee7fb33c7251800b2a5cea3173a9da33",
+    "destinationReference": "refs/heads/master",
+    "event": "pullRequestCreated",
+    "isMerged": "False",
+    "lastModifiedDate": "Sat May 09 12:32:20 UTC 2020",
+    "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: atlantis-test. User: arn:aws:iam::386676700885:user/adrian.wilkins. Event: Created. Pull request name: 4. Additional information: A pull request was created with the following ID: 4. The title of the pull request is: Create a pull request so I can see what the SNS -\u003e HTTP delivery looks like. For more information, go to the AWS CodeCommit console https://eu-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/atlantis-test/pull-requests/4?region=eu-west-2.",
+    "pullRequestId": "4",
+    "pullRequestStatus": "Open",
+    "repositoryNames": [
+      "atlantis-test"
+    ],
+    "revisionId": "ae4ec71fd6bd978e2f0b59c70cb189e8ee240d5d13e047b26642a23fe7e2c2d8",
+    "sourceCommit": "3594b2b47c42d6cd921ae22436de060dd9d6da7d",
+    "sourceReference": "refs/heads/pr-02",
+    "title": "Create a pull request so I can see what the SNS -\u003e HTTP delivery looks like"
+  },
+  "detailType": "CodeCommit Pull Request State Change",
+  "notificationRuleArn": "arn:aws:codestar-notifications:eu-west-2:386676700885:notificationrule/3211b21d68bc434e54a9fa1f8c2837e1a55ce782",
+  "region": "eu-west-2",
+  "resources": [
+    "arn:aws:codecommit:eu-west-2:386676700885:atlantis-test"
+  ],
+  "source": "aws.codecommit",
+  "time": "2020-05-09T12:32:31Z"
+}

@@ -1,0 +1,12 @@
+{
+  "Type": "Notification",
+  "MessageId": "fbc2d040-09d1-5b47-84ce-87708bec7387",
+  "TopicArn": "arn:aws:sns:eu-west-2:386676700885:AtlantisEventTarget",
+  "Subject": "TEST: AWS CodeCommit eu-west-2 push: atlantis-test",
+  "Message": "%s",
+  "Timestamp": "2020-05-09T10:03:41.176Z",
+  "SignatureVersion": "1",
+  "Signature": "ZxC9cxARCA9+ioaHpf7826Oh7DLWuCKHhauuPEvEnC1ScsAHFqeH9+DxbPeLkFHNqYesn+aN/G9kXKzoyYbbzGTyXtEm97qmXFaRy7bDdgAi0Dd0tn0LIhHWTRx6pm3ggSwfDkTz27yFUOq4m5/h2XQQ9JgBnHINh5IDldwOiV40Tkx9IbWXE09g69gRjrs4VmFpiISoCqHLLZL1HvAXF6LDoyJyQqZkTzcfwoFw15B86e8SlRtK1ZqdpWIZsCHdGz6BaYN7SsxKLHRJBYyLyGfSzYpZmSlgNtP4jUsMM5yH/HXou/4d4kAzjZc7b+EV07F+MvJPGYp25v/pk5dfIQ==",
+  "SigningCertURL": "https://sns.eu-west-2.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem",
+  "UnsubscribeURL": "https://sns.eu-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-west-2:386676700885:AtlantisEventTarget:d2cfc883-2b4d-44d9-a7ca-4180dbda18f6"
+}

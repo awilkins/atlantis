@@ -278,6 +278,7 @@ const (
 	BitbucketCloud
 	BitbucketServer
 	AzureDevops
+	CodeCommit
 )
 
 func (h VCSHostType) String() string {
@@ -292,6 +293,8 @@ func (h VCSHostType) String() string {
 		return "BitbucketServer"
 	case AzureDevops:
 		return "AzureDevops"
+	case CodeCommit:
+		return "CodeCommit"
 	}
 	return "<missing String() implementation>"
 }

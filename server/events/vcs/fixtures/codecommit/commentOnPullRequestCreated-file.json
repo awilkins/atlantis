@@ -1,0 +1,34 @@
+{
+  "account": "386676700885",
+  "additionalAttributes": {
+    "commentedLine": null,
+    "commentedLineNumber": null,
+    "comments": [
+      {
+        "authorArn": "arn:aws:iam::386676700885:user/adrian.wilkins",
+        "commentText": "pull request file comment"
+      }
+    ],
+    "filePath": "another.tf",
+    "resourceArn": "arn:aws:codecommit:eu-west-2:386676700885:atlantis-test"
+  },
+  "detail": {
+    "afterCommitId": "083080f1438ea10c7944d2864ea2838983ad2f04",
+    "beforeCommitId": "890b122d8e5f312db9788924a52d14812a4c9487",
+    "callerUserArn": "arn:aws:iam::386676700885:user/adrian.wilkins",
+    "commentId": "ac9cf82f-8148-43d6-a2ee-66f61d0bfee4:e98f0621-fc43-4ab6-ada2-5e7e6c935c36",
+    "event": "commentOnPullRequestCreated",
+    "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: atlantis-test. The user: arn:aws:iam::386676700885:user/adrian.wilkins made a comment or replied to a comment. The comment was made on the following Pull Request: 2. For more information, go to the AWS CodeCommit console https://eu-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/atlantis-test/pull-requests/2/activity#ac9cf82f-8148-43d6-a2ee-66f61d0bfee4%3Ae98f0621-fc43-4ab6-ada2-5e7e6c935c36?region=eu-west-2",
+    "pullRequestId": "2",
+    "repositoryId": "ba4fd543-bf21-429b-a945-a5ddf6cfbe89",
+    "repositoryName": "atlantis-test"
+  },
+  "detailType": "CodeCommit Comment on Pull Request",
+  "notificationRuleArn": "arn:aws:codestar-notifications:eu-west-2:386676700885:notificationrule/3211b21d68bc434e54a9fa1f8c2837e1a55ce782",
+  "region": "eu-west-2",
+  "resources": [
+    "arn:aws:codecommit:eu-west-2:386676700885:atlantis-test"
+  ],
+  "source": "aws.codecommit",
+  "time": "2020-05-09T11:29:34Z"
+}

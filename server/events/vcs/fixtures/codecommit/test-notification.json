@@ -1,0 +1,12 @@
+{
+  "Type": "Notification",
+  "MessageId": "fbc2d040-09d1-5b47-84ce-87708bec7387",
+  "TopicArn": "arn:aws:sns:eu-west-2:386676700885:AtlantisEventTarget",
+  "Subject": "TEST: AWS CodeCommit eu-west-2 push: atlantis-test",
+  "Message": "{\"Records\":[{\"awsRegion\":\"eu-west-2\",\"codecommit\":{\"references\":[{\"commit\":\"083080f1438ea10c7944d2864ea2838983ad2f04\",\"ref\":\"refs/heads/pr-02\"},{\"commit\":\"a332e936f9b190e475be7e102d6cee4c617f6d1b\",\"ref\":\"refs/heads/pr-01\"},{\"commit\":\"830dbe9197c2d2b91b52b99e5c4ef8b95a971e95\",\"ref\":\"refs/heads/master\"}]},\"customData\":\"custom-data-value\",\"eventId\":\"9b897af1-3ce2-4382-b231-499e296c8693\",\"eventName\":\"TriggerEventTest\",\"eventPartNumber\":1,\"eventSource\":\"aws:codecommit\",\"eventSourceARN\":\"arn:aws:codecommit:eu-west-2:386676700885:atlantis-test\",\"eventTime\":\"2020-05-09T10:03:41.141+0000\",\"eventTotalParts\":1,\"eventTriggerConfigId\":\"9b897af1-3ce2-4382-b231-499e296c8693\",\"eventTriggerName\":\"TriggerTest\",\"eventVersion\":\"1.0\",\"userIdentityARN\":\"arn:aws:iam::386676700885:user/adrian.wilkins\"}]}",
+  "Timestamp": "2020-05-09T10:03:41.176Z",
+  "SignatureVersion": "1",
+  "Signature": "ZxC9cxARCA9+ioaHpf7826Oh7DLWuCKHhauuPEvEnC1ScsAHFqeH9+DxbPeLkFHNqYesn+aN/G9kXKzoyYbbzGTyXtEm97qmXFaRy7bDdgAi0Dd0tn0LIhHWTRx6pm3ggSwfDkTz27yFUOq4m5/h2XQQ9JgBnHINh5IDldwOiV40Tkx9IbWXE09g69gRjrs4VmFpiISoCqHLLZL1HvAXF6LDoyJyQqZkTzcfwoFw15B86e8SlRtK1ZqdpWIZsCHdGz6BaYN7SsxKLHRJBYyLyGfSzYpZmSlgNtP4jUsMM5yH/HXou/4d4kAzjZc7b+EV07F+MvJPGYp25v/pk5dfIQ==",
+  "SigningCertURL": "https://sns.eu-west-2.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem",
+  "UnsubscribeURL": "https://sns.eu-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-west-2:386676700885:AtlantisEventTarget:d2cfc883-2b4d-44d9-a7ca-4180dbda18f6"
+}

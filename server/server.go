@@ -117,6 +117,8 @@ func NewServer(userConfig UserConfig, config Config) (*Server, error) {
 	var bitbucketCloudClient *bitbucketcloud.Client
 	var bitbucketServerClient *bitbucketserver.Client
 	var azuredevopsClient *vcs.AzureDevopsClient
+	var codecommitClient *vcs.CodeCommitClient
+
 	if userConfig.GithubUser != "" {
 		supportedVCSHosts = append(supportedVCSHosts, models.Github)
 		var err error
@@ -159,6 +161,15 @@ func NewServer(userConfig UserConfig, config Config) (*Server, error) {
 		supportedVCSHosts = append(supportedVCSHosts, models.AzureDevops)
 		var err error
 		azuredevopsClient, err = vcs.NewAzureDevopsClient("dev.azure.com", userConfig.AzureDevopsToken)
+		if err != nil {
+			return nil, err
+		}
+	}
+	// TODO break this out
+	if userConfig.CodeCommitUser != "" {
+		supportedVCSHosts = append(supportedVCSHosts, models.CodeCommit)
+		var err error
+		codecommitClient, err = vcs.NewCodeCommitClient()
 		if err != nil {
 			return nil, err
 		}
@@ -211,7 +222,14 @@ func NewServer(userConfig UserConfig, config Config) (*Server, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "initializing webhooks")
 	}
-	vcsClient := vcs.NewClientProxy(githubClient, gitlabClient, bitbucketCloudClient, bitbucketServerClient, azuredevopsClient)
+	vcsClient := vcs.NewClientProxy(
+		githubClient,
+		gitlabClient,
+		bitbucketCloudClient,
+		bitbucketServerClient,
+		azuredevopsClient,
+		codecommitClient,
+	)
 	commitStatusUpdater := &events.DefaultCommitStatusUpdater{Client: vcsClient, StatusName: userConfig.VCSStatusName}
 	terraformClient, err := terraform.NewClient(
 		logger,

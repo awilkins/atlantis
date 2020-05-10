@@ -1,0 +1,12 @@
+{
+  "Type": "SubscriptionConfirmation",
+  "MessageId": "9805b1df-4bf6-443e-99e7-7941840be8b9",
+  "Token": "2336412f37fb687f5d51e6e2425f004aec6ce33a77ad42acdd648f4432d51051fd846bdf7db50f7bf035996ea7aa62963c2d969bb54b07a7207328d429d6985f54c10e34a96b452bc982b58a39911b1fa81cc0ff5871180c68818de395ccbdf0d0d6a19ec19d785eeda1ba1888f3a9ce57a694520a0dc1f4a0056e27d0e30e55",
+  "TopicArn": "arn:aws:sns:eu-west-2:386676700885:AtlantisNotifcationTarget",
+  "Message": "You have chosen to subscribe to the topic arn:aws:sns:eu-west-2:386676700885:AtlantisNotifcationTarget.\nTo confirm the subscription, visit the SubscribeURL included in this message.",
+  "SubscribeURL": "https://sns.eu-west-2.amazonaws.com/?Action=ConfirmSubscription&TopicArn=arn:aws:sns:eu-west-2:386676700885:AtlantisNotifcationTarget&Token=2336412f37fb687f5d51e6e2425f004aec6ce33a77ad42acdd648f4432d51051fd846bdf7db50f7bf035996ea7aa62963c2d969bb54b07a7207328d429d6985f54c10e34a96b452bc982b58a39911b1fa81cc0ff5871180c68818de395ccbdf0d0d6a19ec19d785eeda1ba1888f3a9ce57a694520a0dc1f4a0056e27d0e30e55",
+  "Timestamp": "2020-05-09T13:24:35.625Z",
+  "SignatureVersion": "1",
+  "Signature": "BSzac8UkwBx9AijjlhLSfb4dDVKTLoF2V6UBdTaLDA19ddbAz86oXZhAwZhz6xjeWsKJGlUveTVvJNN8BeH/9V+SnGsRz8jZW7vWKwphhRLBHjLP8d1unIv4WdRMVDOdHaQu0Azkj/XJu+NGUrUle+lif9tzRozJ+LN90JbAUEwObFAaPa6nhQW/vv/lP+pMhNsi9LQanbdrtIpduB4MCG/ZdAQtySGWYVLxrepQrNbozUkJDzl8LMmekfI8FX7+ZtjSQ2mFECBJA8jSOd339DXlcT/RdRqkU30eLeWwPOEBljPPJC16y9eFcoSK+vGZshJ5Sze/gLUA49f/keVYsA==",
+  "SigningCertURL": "https://sns.eu-west-2.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem"
+}

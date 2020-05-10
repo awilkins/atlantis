@@ -1,0 +1,33 @@
+{
+  "account": "386676700885",
+  "additionalAttributes": {
+    "commentedLine": null,
+    "commentedLineNumber": null,
+    "comments": [
+      {
+        "authorArn": "arn:aws:iam::386676700885:user/adrian.wilkins",
+        "commentText": "Another commit comment"
+      }
+    ],
+    "filePath": null,
+    "resourceArn": "arn:aws:codecommit:eu-west-2:386676700885:atlantis-test"
+  },
+  "detail": {
+    "afterCommitId": "c9d586520b82685111240d2142a9e9cbf8feae6a",
+    "beforeCommitId": "659cb94af6219997a4f3e751911baa5419e025bb",
+    "callerUserArn": "arn:aws:iam::386676700885:user/adrian.wilkins",
+    "commentId": "01641ca0-6eba-4dd9-acdf-f2e30b2fa85c:c202ae84-e65f-4ca5-aa3a-dae77bdd2128",
+    "event": "commentOnCommitCreated",
+    "notificationBody": "A comment event occurred in the following AWS CodeCommit repository: atlantis-test. The user: arn:aws:iam::386676700885:user/adrian.wilkins made a comment or replied to a comment. The comment was made on a comparison between the following commits: 659cb94af6219997a4f3e751911baa5419e025bb : c9d586520b82685111240d2142a9e9cbf8feae6a. For more information, go to the AWS CodeCommit console https://eu-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/atlantis-test/compare/659cb94af6219997a4f3e751911baa5419e025bb/.../c9d586520b82685111240d2142a9e9cbf8feae6a?region=eu-west-2",
+    "repositoryId": "ba4fd543-bf21-429b-a945-a5ddf6cfbe89",
+    "repositoryName": "atlantis-test"
+  },
+  "detailType": "CodeCommit Comment on Commit",
+  "notificationRuleArn": "arn:aws:codestar-notifications:eu-west-2:386676700885:notificationrule/3211b21d68bc434e54a9fa1f8c2837e1a55ce782",
+  "region": "eu-west-2",
+  "resources": [
+    "arn:aws:codecommit:eu-west-2:386676700885:atlantis-test"
+  ],
+  "source": "aws.codecommit",
+  "time": "2020-05-09T11:27:06Z"
+}
