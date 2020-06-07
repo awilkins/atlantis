@@ -90,6 +90,7 @@ type EventsController struct {
 
 // Post handles POST webhook requests.
 func (e *EventsController) Post(w http.ResponseWriter, r *http.Request) {
+
 	if r.Header.Get(githubHeader) != "" {
 		if !e.supportsHost(models.Github) {
 			e.respond(w, logging.Debug, http.StatusBadRequest, "Ignoring request since not configured to support GitHub")
@@ -98,7 +99,9 @@ func (e *EventsController) Post(w http.ResponseWriter, r *http.Request) {
 		e.Logger.Debug("handling GitHub post")
 		e.handleGithubPost(w, r)
 		return
-	} else if r.Header.Get(gitlabHeader) != "" {
+	}
+
+	if r.Header.Get(gitlabHeader) != "" {
 		if !e.supportsHost(models.Gitlab) {
 			e.respond(w, logging.Debug, http.StatusBadRequest, "Ignoring request since not configured to support GitLab")
 			return
@@ -106,7 +109,10 @@ func (e *EventsController) Post(w http.ResponseWriter, r *http.Request) {
 		e.Logger.Debug("handling GitLab post")
 		e.handleGitlabPost(w, r)
 		return
-	} else if r.Header.Get(bitbucketEventTypeHeader) != "" {
+	}
+
+	if r.Header.Get(bitbucketEventTypeHeader) != "" {
+
 		// Bitbucket Cloud and Server use the same event type header but they
 		// use different request ID headers.
 		if r.Header.Get(bitbucketCloudRequestIDHeader) != "" {
@@ -117,7 +123,9 @@ func (e *EventsController) Post(w http.ResponseWriter, r *http.Request) {
 			e.Logger.Debug("handling Bitbucket Cloud post")
 			e.handleBitbucketCloudPost(w, r)
 			return
-		} else if r.Header.Get(bitbucketServerRequestIDHeader) != "" {
+		}
+
+		if r.Header.Get(bitbucketServerRequestIDHeader) != "" {
 			if !e.supportsHost(models.BitbucketServer) {
 				e.respond(w, logging.Debug, http.StatusBadRequest, "Ignoring request since not configured to support Bitbucket Server")
 				return
@@ -126,7 +134,9 @@ func (e *EventsController) Post(w http.ResponseWriter, r *http.Request) {
 			e.handleBitbucketServerPost(w, r)
 			return
 		}
-	} else if r.Header.Get(azuredevopsHeader) != "" {
+	}
+
+	if r.Header.Get(azuredevopsHeader) != "" {
 		if !e.supportsHost(models.AzureDevops) {
 			e.respond(w, logging.Debug, http.StatusBadRequest, "Ignoring request since not configured to support AzureDevops")
 			return
